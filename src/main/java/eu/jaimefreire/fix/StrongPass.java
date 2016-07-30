@@ -11,23 +11,26 @@ import java.util.*;
  */
 public class StrongPass {
 
+    static final StringBuffer chars= new StringBuffer();
+
+    static {
+        final Charset charset = Charset.forName("UTF-8");
+        for (int i = 0; i < 255; i++) {
+            ByteBuffer bb = ByteBuffer.allocate(4);
+            bb.putInt(i);
+            chars.append(new String(bb.array(), charset).trim());
+        }
+
+    }
+
     public static boolean isAsciiPrintable(char ch) {
         return ch >= 32 && ch < 127;
     }
 
     public static String generatePassword() {
 
-        final Charset charset = Charset.forName("UTF-8");
-        StringBuffer chars = new StringBuffer();
-        for (int i = 0; i < 255; i++) {
-            ByteBuffer bb = ByteBuffer.allocate(4);
-            bb.putInt(i);
-            chars.append(new String(bb.array(), charset).trim());
-
-        }
-
         //String[] symbols = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
-        int length = 15;
+        int length = 30;
         Random random = null;    // as of JDK 8, this should return the strongest algorithm available to the JVM
         try {
             random = SecureRandom.getInstanceStrong();
@@ -46,10 +49,10 @@ public class StrongPass {
         }
 
         String password = sb.toString();
-        String cleanPwd  = password.replaceAll("\\p{C}", "?");;
-        System.out.println("Size: " +  cleanPwd.length() + " -  " + cleanPwd);
+//        String cleanPwd  = password.replaceAll("\\p{C}", "?");;
+        System.out.println("Pwd: " + password);
 
-        return cleanPwd;
+        return password;
 
     }
 }
