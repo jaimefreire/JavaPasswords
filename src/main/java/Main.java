@@ -34,6 +34,7 @@ public class Main {
 
       get("/pass", (request, response) -> {
           Map<String, Object> attributes = new HashMap<>();
+          
           attributes.put("message", StrongPass.generatePassword());
 
           return new ModelAndView(attributes, "pass.ftl");
