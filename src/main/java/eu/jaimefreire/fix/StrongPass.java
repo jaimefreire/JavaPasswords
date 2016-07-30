@@ -4,6 +4,9 @@ import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.*;
 
 /**
@@ -29,6 +32,8 @@ public class StrongPass {
 
     public static String generatePassword() {
 
+        LocalDateTime start = LocalDateTime.now();
+
         //String[] symbols = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
         int length = 30;
         Random random = null;    // as of JDK 8, this should return the strongest algorithm available to the JVM
@@ -40,7 +45,7 @@ public class StrongPass {
         StringBuilder sb = new StringBuilder(length);
         char[] charArray = chars.toString().toCharArray();
 
-        while(sb.length()<length)
+        while(sb.length() < length && Duration.between(start, LocalDateTime.now()).getSeconds() < 10)
 
         {
             int indexRandom = random.nextInt(charArray.length);
