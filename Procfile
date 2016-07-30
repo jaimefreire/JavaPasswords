@@ -1,1 +1,2 @@
-web:    java -jar target/helloworld.jar
+web: with_jdwp java $JAVA_OPTS -jar target/helloworld.jar
+
