@@ -7,6 +7,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import static spark.Spark.*;
+
+import eu.jaimefreire.fix.StrongPass;
 import spark.template.freemarker.FreeMarkerEngine;
 import spark.ModelAndView;
 import static spark.Spark.get;
@@ -28,6 +30,15 @@ public class Main {
 
             return new ModelAndView(attributes, "index.ftl");
         }, new FreeMarkerEngine());
+
+
+      get("/pass", (request, response) -> {
+          Map<String, Object> attributes = new HashMap<>();
+          attributes.put("message", StrongPass.generatePassword());
+
+          return new ModelAndView(attributes, "pass.ftl");
+      }, new FreeMarkerEngine());
+
 
     get("/db", (req, res) -> {
       Connection connection = null;
